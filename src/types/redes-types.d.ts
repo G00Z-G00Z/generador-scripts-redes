@@ -1,7 +1,8 @@
-// Ip information
-export type IpAddressForm = `${number}.${number}.${number}.${number}`
 
-export type IpAddressWithMask = `${IpAddressForm} ${IpAddressForm}`
+// Ip information
+export type IpAddressForm = string
+
+export type IpAddressWithMask = string
 
 export interface IpAddressInfo {
     isNetwork(): boolean
