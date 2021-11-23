@@ -4,8 +4,6 @@ import { useForm } from "../hooks/useForm";
 import { CheckBoxes } from "./CheckBoxes";
 import { useToggle } from "../hooks/useToggle";
 export const BasicRouterConfig = () => {
-	const router = useContext(RouterConfigContext);
-
 	const { hostname, onChange, banner } = useForm({
 		hostname: "",
 		banner: "",
@@ -28,7 +26,6 @@ export const BasicRouterConfig = () => {
 				placeholder="Hostname del router"
 				value={hostname}
 				onChange={(e) => {
-					router.hostname = e.target.value;
 					onChange(e.target.value, "hostname");
 				}}
 			/>
@@ -42,7 +39,6 @@ export const BasicRouterConfig = () => {
 				placeholder="banner del router"
 				value={banner}
 				onChange={(e) => {
-					router.security.bannerMord = e.target.value;
 					onChange(e.target.value, "banner");
 				}}
 			/>
@@ -51,29 +47,20 @@ export const BasicRouterConfig = () => {
 			<CheckBoxes
 				label={"Tiene encription"}
 				name={"encription"}
-				value={router.security.encription}
-				onChange={() => {
-					toggleEncription();
-					router.security.encription = encription;
-				}}
+				value={encription}
+				onChange={toggleEncription}
 			/>
 			<CheckBoxes
 				label={"Tiene line console security"}
 				name={"lineconsole"}
-				value={router.security.lineConsole}
-				onChange={() => {
-					togglelineConsole();
-					router.security.lineConsole = lineConsole;
-				}}
+				value={lineConsole}
+				onChange={togglelineConsole}
 			/>
 			<CheckBoxes
 				label={"Tiene vty"}
 				name={"vty"}
-				value={router.security.vty}
-				onChange={() => {
-					togglevty();
-					router.security.vty = vty;
-				}}
+				value={vty}
+				onChange={togglevty}
 			/>
 		</>
 	);

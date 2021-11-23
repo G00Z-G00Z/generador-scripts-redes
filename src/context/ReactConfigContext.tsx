@@ -1,7 +1,8 @@
 import { createContext } from "react";
+import { RouterActions } from "../reducers/RouterConfigReducer";
 import { Router } from "../types/redes-types";
 
-export const emptyRouterConfiguration = {
+export const emptyRouterConfiguration: Router = {
 	hostname: "",
 	interfaces: [],
 	security: {
@@ -12,6 +13,10 @@ export const emptyRouterConfiguration = {
 	},
 };
 
-export const RouterConfigContext = createContext<Router>(
-	emptyRouterConfiguration
-);
+export const RouterConfigContext = createContext<{
+	routerConfig: Router;
+	dispatch: (action: RouterActions) => void;
+}>({
+	routerConfig: emptyRouterConfiguration,
+	dispatch: (action: RouterActions) => {},
+});

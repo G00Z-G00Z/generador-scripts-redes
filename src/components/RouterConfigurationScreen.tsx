@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useReducer } from "react";
 import { GenratedScript } from "./GenratedScript";
 import { RouterConfiguration } from "./RouterConfiguration";
+
 import {
 	RouterConfigContext,
 	emptyRouterConfiguration,
 } from "../context/ReactConfigContext";
+import { RouterReducer } from "../reducers/RouterConfigReducer";
 
 export const RouterConfigurationScreen = () => {
+	const [routerConfig, dispatch] = useReducer(
+		RouterReducer,
+		emptyRouterConfiguration
+	);
+
 	return (
-		<RouterConfigContext.Provider value={emptyRouterConfiguration}>
+		<RouterConfigContext.Provider
+			value={{
+				routerConfig,
+				dispatch,
+			}}
+		>
 			<div className="container">
 				<h1>Configuracion del router</h1>
 				<p>
