@@ -1,7 +1,8 @@
+import { RouterConfigurationScreen } from "./components/RouterConfigurationScreen";
 function App() {
 	return (
 		<>
-			<div className="container">Hola</div>
+			<RouterConfigurationScreen />
 		</>
 	);
 }
