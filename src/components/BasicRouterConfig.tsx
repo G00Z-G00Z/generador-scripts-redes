@@ -3,7 +3,10 @@ import { RouterConfigContext } from "../context/ReactConfigContext";
 import { useForm } from "../hooks/useForm";
 import { CheckBoxes } from "./CheckBoxes";
 import { useToggle } from "../hooks/useToggle";
+import { RouterItemConfigurable } from "../reducers/RouterConfigReducer";
 export const BasicRouterConfig = () => {
+	const { routerConfig, dispatch } = useContext(RouterConfigContext);
+
 	const { hostname, onChange, banner } = useForm({
 		hostname: "",
 		banner: "",
@@ -24,9 +27,12 @@ export const BasicRouterConfig = () => {
 				className="form-control"
 				name="hostname"
 				placeholder="Hostname del router"
-				value={hostname}
+				value={routerConfig.hostname}
 				onChange={(e) => {
-					onChange(e.target.value, "hostname");
+					dispatch({
+						type: RouterItemConfigurable.hostname,
+						payload: e.target.value,
+					});
 				}}
 			/>
 			<label htmlFor="banner" className="form-label">

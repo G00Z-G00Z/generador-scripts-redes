@@ -1,6 +1,6 @@
 import { Router } from "../types/redes-types";
 
-enum RouterItemConfigurable {
+export enum RouterItemConfigurable {
 	hostname,
 	banner,
 	vty,
@@ -33,7 +33,7 @@ export const RouterReducer = (
 ): Router => {
 	switch (action.type) {
 		case RouterItemConfigurable.hostname:
-			return router;
+			return { ...router, hostname: action.payload };
 		case RouterItemConfigurable.banner:
 			return router;
 		case RouterItemConfigurable.vty:

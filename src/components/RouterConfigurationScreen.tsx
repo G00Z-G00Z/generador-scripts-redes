@@ -7,12 +7,17 @@ import {
 	emptyRouterConfiguration,
 } from "../context/ReactConfigContext";
 import { RouterReducer } from "../reducers/RouterConfigReducer";
+import { useEffect } from "react";
 
 export const RouterConfigurationScreen = () => {
 	const [routerConfig, dispatch] = useReducer(
 		RouterReducer,
 		emptyRouterConfiguration
 	);
+
+	useEffect(() => {
+		console.log("Se ha cambiado este pedo");
+	}, [routerConfig]);
 
 	return (
 		<RouterConfigContext.Provider
