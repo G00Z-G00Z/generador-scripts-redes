@@ -1,19 +1,25 @@
-import {
-	IpAddressInfo,
-	IpAddressForm,
-	IpAddressWithMask,
-} from "../types/redes-types";
+import { IpAddressInfo } from "../types/redes-types";
 
 export class IpAddress implements IpAddressInfo {
+	private isNet: boolean;
+	private address: string;
+	private mask: string;
+
+	constructor(address: string, mask: string, isNetwork: boolean) {
+		this.isNet = isNetwork;
+		this.address = address;
+		this.mask = mask;
+	}
+
 	isNetwork(): boolean {
-		return false;
+		return this.isNet;
 	}
 	get ipAddress() {
-		return "0.10.8.1";
+		return this.address;
 	}
 
 	get ipMask() {
-		return "0.10.15.8";
+		return this.mask;
 	}
 
 	get full() {
