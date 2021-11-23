@@ -1,20 +1,13 @@
 import React, { useContext } from "react";
 import { RouterConfigContext } from "../context/ReactConfigContext";
-import { useForm } from "../hooks/useForm";
 import { CheckBoxes } from "./CheckBoxes";
-import { useToggle } from "../hooks/useToggle";
 import { RouterItemConfigurable } from "../reducers/RouterConfigReducer";
 export const BasicRouterConfig = () => {
 	const { routerConfig, dispatch } = useContext(RouterConfigContext);
 
-	const { hostname, onChange, banner } = useForm({
-		hostname: "",
-		banner: "",
-	});
+	const { hostname, security } = routerConfig;
 
-	const [encription, toggleEncription] = useToggle(false);
-	const [vty, togglevty] = useToggle(false);
-	const [lineConsole, togglelineConsole] = useToggle(false);
+	const { bannerMord, encription, lineConsole, vty } = security;
 
 	return (
 		<>
@@ -27,7 +20,7 @@ export const BasicRouterConfig = () => {
 				className="form-control"
 				name="hostname"
 				placeholder="Hostname del router"
-				value={routerConfig.hostname}
+				value={hostname}
 				onChange={(e) => {
 					dispatch({
 						type: RouterItemConfigurable.hostname,
@@ -43,9 +36,12 @@ export const BasicRouterConfig = () => {
 				className="form-control"
 				name="banner"
 				placeholder="banner del router"
-				value={banner}
+				value={bannerMord}
 				onChange={(e) => {
-					onChange(e.target.value, "banner");
+					dispatch({
+						type: RouterItemConfigurable.banner,
+						payload: e.target.value,
+					});
 				}}
 			/>
 			{/* Chekc boxes */}
@@ -54,19 +50,34 @@ export const BasicRouterConfig = () => {
 				label={"Tiene encription"}
 				name={"encription"}
 				value={encription}
-				onChange={toggleEncription}
+				onChange={() => {
+					dispatch({
+						type: RouterItemConfigurable.encription,
+						payload: !encription,
+					});
+				}}
 			/>
 			<CheckBoxes
 				label={"Tiene line console security"}
 				name={"lineconsole"}
 				value={lineConsole}
-				onChange={togglelineConsole}
+				onChange={() => {
+					dispatch({
+						type: RouterItemConfigurable.console,
+						payload: !lineConsole,
+					});
+				}}
 			/>
 			<CheckBoxes
 				label={"Tiene vty"}
 				name={"vty"}
 				value={vty}
-				onChange={togglevty}
+				onChange={() => {
+					dispatch({
+						type: RouterItemConfigurable.vty,
+						payload: !vty,
+					});
+				}}
 			/>
 		</>
 	);

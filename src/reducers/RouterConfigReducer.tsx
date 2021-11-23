@@ -19,29 +19,42 @@ export type RouterActions =
 	  }
 	| {
 			type: RouterItemConfigurable.vty;
+			payload: boolean;
 	  }
 	| {
 			type: RouterItemConfigurable.console;
+			payload: boolean;
 	  }
 	| {
 			type: RouterItemConfigurable.encription;
+			payload: boolean;
 	  };
 
 export const RouterReducer = (
 	router: Router,
 	action: RouterActions
 ): Router => {
+	let newState: typeof router;
+
 	switch (action.type) {
 		case RouterItemConfigurable.hostname:
 			return { ...router, hostname: action.payload };
 		case RouterItemConfigurable.banner:
-			return router;
+			newState = { ...router };
+			newState.security.bannerMord = action.payload;
+			return newState;
 		case RouterItemConfigurable.vty:
-			return router;
+			newState = { ...router };
+			newState.security.vty = action.payload;
+			return newState;
 		case RouterItemConfigurable.console:
-			return router;
+			newState = { ...router };
+			newState.security.lineConsole = action.payload;
+			return newState;
 		case RouterItemConfigurable.encription:
-			return router;
+			newState = { ...router };
+			newState.security.encription = action.payload;
+			return newState;
 
 		default:
 			return router;
