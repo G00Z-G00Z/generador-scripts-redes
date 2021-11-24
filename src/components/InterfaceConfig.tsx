@@ -3,6 +3,7 @@ import { Interface } from "./Interface";
 import { useState, useContext } from "react";
 import { RouterConfigContext } from "../context/ReactConfigContext";
 import { useEffect } from "react";
+import { RouterInterface } from "../types/redes-types";
 
 function* keyGeneratorFunc() {
 	for (let i = 0; ; i++) yield i.toString();
@@ -19,7 +20,20 @@ export const InterfaceConfig = () => {
 
 	const handleAdding = () => {
 		const id = keyGenerator?.next()?.value ?? "1";
-		setListInterfaces([...listInterfaces, <Interface id={id} key={id} />]);
+
+		const routerInterface: RouterInterface = {
+			description: "",
+			interfaceCableType: {
+				type: "fastethernet",
+				port: "",
+			},
+			ipAddress: "",
+		};
+
+		setListInterfaces([
+			...listInterfaces,
+			<Interface id={id} key={id} routerInter={routerInterface} />,
+		]);
 	};
 
 	useEffect(() => {
