@@ -1,5 +1,14 @@
 import { Router, RouterInterface } from "../types/redes-types";
 
+const emptyRouterInterface: RouterInterface = {
+	description: "",
+	interfaceCableType: {
+		type: "fastethernet",
+		port: "",
+	},
+	ipAddress: "",
+};
+
 export enum RouterItemConfigurable {
 	hostname,
 	banner,
@@ -7,7 +16,8 @@ export enum RouterItemConfigurable {
 	console,
 	encription,
 	eraseInterface,
-	addInterface,
+	update,
+	createNewInterface,
 }
 
 export type RouterActions =
@@ -33,10 +43,18 @@ export type RouterActions =
 	  }
 	| {
 			type: RouterItemConfigurable.eraseInterface;
-			payload: string;
+			payload: {
+				key: string;
+			};
 	  }
 	| {
-			type: RouterItemConfigurable.addInterface;
+			type: RouterItemConfigurable.createNewInterface;
+			payload: {
+				key: string;
+			};
+	  }
+	| {
+			type: RouterItemConfigurable.update;
 			payload: {
 				key: string;
 				routerInterface: RouterInterface;
@@ -69,12 +87,23 @@ export const RouterReducer = (
 			newState.security.encription = action.payload;
 			return newState;
 		case RouterItemConfigurable.eraseInterface:
-			router.interfaces.delete(action.payload);
-			return router;
+			newState = { ...router };
+			newState.interfaces.delete(action.payload.key);
+			return newState;
 
-		case RouterItemConfigurable.addInterface:
-			router.interfaces.set(action.payload.key, action.payload.routerInterface);
-			return router;
+		case RouterItemConfigurable.update: {
+			newState = { ...router };
+			newState.interfaces.set(
+				action.payload.key,
+				action.payload.routerInterface
+			);
+			return newState;
+		}
+		case RouterItemConfigurable.createNewInterface:
+			newState = { ...router };
+
+			newState.interfaces.set(action.payload.key, { ...emptyRouterInterface });
+			return newState;
 
 		default:
 			return router;

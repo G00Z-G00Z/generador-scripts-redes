@@ -135,18 +135,6 @@ export const Interface: FC<{ id: string; routerInter: RouterInterface }> = ({
 				value={description}
 				onChange={(e) => {}}
 			/>
-			<button
-				className="btn btn-danger"
-				onClick={() => {
-					console.log("Esoty intentando borrar");
-					dispatch({
-						type: RouterItemConfigurable.eraseInterface,
-						payload: id,
-					});
-				}}
-			>
-				Delete interface
-			</button>
 		</div>
 	);
 };
