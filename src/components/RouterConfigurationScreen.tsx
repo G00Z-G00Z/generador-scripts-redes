@@ -26,7 +26,7 @@ export const RouterConfigurationScreen = () => {
 				dispatch,
 			}}
 		>
-			<div className="container">
+			<div className="container mb-5">
 				<h1>Configuracion del router</h1>
 				<p>
 					<b>¿Como usarlo?</b> <br /> Puedes usar la configuracion llenando la

@@ -1,4 +1,4 @@
-import { Router } from "../types/redes-types";
+import { Router, RouterInterface } from "../types/redes-types";
 
 export enum RouterItemConfigurable {
 	hostname,
@@ -6,6 +6,8 @@ export enum RouterItemConfigurable {
 	vty,
 	console,
 	encription,
+	eraseInterface,
+	addInterface,
 }
 
 export type RouterActions =
@@ -28,6 +30,17 @@ export type RouterActions =
 	| {
 			type: RouterItemConfigurable.encription;
 			payload: boolean;
+	  }
+	| {
+			type: RouterItemConfigurable.eraseInterface;
+			payload: string;
+	  }
+	| {
+			type: RouterItemConfigurable.addInterface;
+			payload: {
+				key: string;
+				routerInterface: RouterInterface;
+			};
 	  };
 
 export const RouterReducer = (
@@ -55,6 +68,13 @@ export const RouterReducer = (
 			newState = { ...router };
 			newState.security.encription = action.payload;
 			return newState;
+		case RouterItemConfigurable.eraseInterface:
+			router.interfaces.delete(action.payload);
+			return router;
+
+		case RouterItemConfigurable.addInterface:
+			router.interfaces.set(action.payload.key, action.payload.routerInterface);
+			return router;
 
 		default:
 			return router;

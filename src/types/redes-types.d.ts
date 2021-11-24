@@ -26,10 +26,10 @@ export interface DHCPConfiguration {
 export type RouterInterfaceCables =
     {
         type: "fastethernet" | "gigabitethernet",
-        port: `${number}/${number}`
+        port: string
     } |
     {
-        port: `${number}/${number}`
+        port: string
         type: "serial",
         isFemale: boolean
     }
@@ -51,7 +51,7 @@ export interface Router {
         encription: boolean,
         bannerMord: string
     }
-    interfaces: RouterInterface[]
+    interfaces: Map<string, RouterInterface>
 
 }
 
