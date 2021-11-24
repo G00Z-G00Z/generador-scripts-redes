@@ -22,6 +22,8 @@ export interface DHCPConfiguration {
     poolName: string
 }
 
+type CableTypes = "serial" | "fastethernet" | "gigabitethernet";
+
 // Router Interfaces
 export type RouterInterfaceCables =
     {
@@ -38,7 +40,8 @@ export type RouterInterfaceCables =
 export type RouterInterface = {
     interfaceCableType: RouterInterfaceCables,
     description: string,
-    ipAddress: IpAddressWithMask,
+    ipAddress: string,
+    ipMask: string,
     dhcp?: DHCPConfiguration,
 }
 

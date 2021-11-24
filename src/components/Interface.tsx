@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { RouterConfigContext } from "../context/ReactConfigContext";
 import { RouterItemConfigurable } from "../reducers/RouterConfigReducer";
 import { RouterInterface, RouterInterfaceCables } from "../types/redes-types";
+import { useToggle } from "../hooks/useToggle";
 
 type CableTypes = "serial" | "fastethernet" | "gigabitethernet";
 
@@ -13,62 +14,50 @@ export const Interface: FC<{ id: string; routerInter: RouterInterface }> = ({
 	id,
 	routerInter,
 }) => {
-	const { description, interfaceCableType, ipAddress } = routerInter;
+	const { description, interfaceCableType, ipMask, ipAddress } = routerInter;
 
 	const { dispatch } = useContext(RouterConfigContext);
-	// const [cableType, setCableType] = useState<CableTypes>("fastethernet");
 
-	// const [isFemale, setIsFemale] = useState(false);
+	const [type, setType] = useState(interfaceCableType.type);
 
-	const { onChange, ipMask } = useForm({
-		ipMask: "",
+	const { onChange, ipAdd, ipMas, descriptionForm, port } = useForm({
+		ipMas: ipMask,
+		ipAdd: ipAddress,
+		port: interfaceCableType.port,
+		descriptionForm: description,
 	});
 
-	// // Esto borra la ip
-	// useEffect(() => {
-	// 	return () => {
-	// 		dispatch({
-	// 			type: RouterItemConfigurable.eraseInterface,
-	// 			payload: id,
-	// 		});
-	// 	};
-	// }, []);
+	const [isFemale, toggleIsFemale] = useToggle(
+		interfaceCableType.type === "serial" && interfaceCableType.isFemale
+	);
 
-	// useEffect(() => {
-	// 	if (portNumber && ipAddress && ipMask) {
-	// 		const cableInterface: RouterInterfaceCables =
-	// 			cableType === "serial"
-	// 				? {
-	// 						isFemale,
-	// 						type: cableType,
-	// 						port: portNumber,
-	// 				  }
-	// 				: {
-	// 						type: cableType,
-	// 						port: portNumber,
-	// 				  };
+	useEffect(() => {
+		const cableInter: RouterInterfaceCables =
+			type === "serial"
+				? {
+						type: "serial",
+						isFemale,
+						port,
+				  }
+				: {
+						type,
 
-	// 		const routerInterface: RouterInterface = {
-	// 			description,
-	// 			ipAddress: `${ipAddress} ${ipMask}`,
-	// 			interfaceCableType: cableInterface,
-	// 		};
+						port,
+				  };
 
-	// 		dispatch({
-	// 			type: RouterItemConfigurable.addInterface,
-	// 			payload: { routerInterface, key: id },
-	// 		});
-	// 	}
-	// }, [
-	// 	portNumber,
-	// 	ipAddress,
-	// 	cableType,
-	// 	ipMask,
-	// 	description,
-	// 	isFemale,
-	// 	dispatch,
-	// 	id,
-	// ]);
+		dispatch({
+			type: RouterItemConfigurable.update,
+			payload: {
+				key: id,
+				routerInterface: {
+					description: descriptionForm,
+					interfaceCableType: cableInter,
+					ipAddress: ipAdd,
+					ipMask: ipMas,
+				},
+			},
+		});
+	}, [isFemale, descriptionForm, dispatch, id, ipAdd, ipMas, port, type]);
 
 	return (
 		<div>
@@ -76,20 +65,21 @@ export const Interface: FC<{ id: string; routerInter: RouterInterface }> = ({
 			<select
 				className="form-select"
 				aria-label="Default select example"
-				value={interfaceCableType.type}
-				// @ts-ignore
-				onChange={(e) => {}}
+				value={type}
+				onChange={(e) => setType(e.target.value as CableTypes)}
 			>
 				<option value={"fastethernet"}>Fast Ethernet</option>
 				<option value={"serial"}>Serial </option>
 				<option value={"gigabitethernet"}>Gigabit</option>
 			</select>
-			{interfaceCableType.type === "serial" && (
+			{type === "serial" && (
 				<CheckBoxes
 					label="Es hembra?"
-					value={interfaceCableType.isFemale}
+					value={isFemale}
 					name="es-hembra"
-					onChange={() => {}}
+					onChange={() => {
+						toggleIsFemale();
+					}}
 				/>
 			)}
 			<label htmlFor="portnumber" className="form-label">
@@ -100,8 +90,10 @@ export const Interface: FC<{ id: string; routerInter: RouterInterface }> = ({
 				className="form-control"
 				name="portnumber"
 				placeholder="portnumber del router"
-				value={interfaceCableType.port}
-				onChange={() => {}}
+				value={port}
+				onChange={(e) => {
+					onChange(e.target.value, "port");
+				}}
 			/>
 			<strong>Ip address</strong> <br />
 			<small>Pones la direccion normal y luego pones diagonal algo</small>
@@ -111,8 +103,10 @@ export const Interface: FC<{ id: string; routerInter: RouterInterface }> = ({
 					className="form-control"
 					name="ipAddress"
 					placeholder="ipAddress del router"
-					value={ipAddress}
-					onChange={(e) => {}}
+					value={ipAdd}
+					onChange={(e) => {
+						onChange(e.target.value, "ipAdd");
+					}}
 				/>
 				<span className="input-group-text">/</span>
 				<input
@@ -120,11 +114,13 @@ export const Interface: FC<{ id: string; routerInter: RouterInterface }> = ({
 					className="form-control"
 					name="ipMask"
 					placeholder="ipMask del router"
-					value={ipMask}
-					onChange={(e) => {}}
+					value={ipMas}
+					onChange={(e) => {
+						onChange(e.target.value, "ipMas");
+					}}
 				/>
 			</div>
-			<label htmlFor="banner" className="form-label">
+			<label htmlFor="description" className="form-label">
 				Poner la descripción
 			</label>
 			<input
@@ -132,8 +128,10 @@ export const Interface: FC<{ id: string; routerInter: RouterInterface }> = ({
 				className="form-control"
 				name="description"
 				placeholder="description del router"
-				value={description}
-				onChange={(e) => {}}
+				value={descriptionForm}
+				onChange={(e) => {
+					onChange(e.target.value, "descriptionForm");
+				}}
 			/>
 		</div>
 	);

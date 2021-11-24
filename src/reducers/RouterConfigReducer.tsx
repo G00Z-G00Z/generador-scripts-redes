@@ -7,6 +7,7 @@ const emptyRouterInterface: RouterInterface = {
 		port: "",
 	},
 	ipAddress: "",
+	ipMask: "",
 };
 
 export enum RouterItemConfigurable {
