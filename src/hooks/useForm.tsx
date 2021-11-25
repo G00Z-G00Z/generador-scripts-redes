@@ -10,10 +10,21 @@ export const useForm = <T extends Object>(initialState: T) => {
 		});
 	};
 
+	const clearFormulario = () => {
+		setFormulario((f) => {
+			Object.keys(f).map((key, idx) => {
+				//@ts-ignore
+				f[key] = "";
+			});
+			return f;
+		});
+	};
+
 	return {
 		...formulario,
 		formulario,
 		onChange,
+		clearFormulario,
 	};
 };
 

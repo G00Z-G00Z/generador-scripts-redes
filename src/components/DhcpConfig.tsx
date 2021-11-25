@@ -25,6 +25,7 @@ export const DhcpConfig: FC<Props> = ({ id, routerInter }) => {
 		excluded,
 		formulario,
 		onChange,
+		clearFormulario,
 	} = useForm({
 		network: routerInter.dhcp.network,
 		defaultRouter: routerInter.dhcp.defaultRouter,
@@ -56,6 +57,27 @@ export const DhcpConfig: FC<Props> = ({ id, routerInter }) => {
 		});
 	}, [defaultRouter, dispatch, dnsServer, excluded, id, network, poolName]);
 
+	useEffect(() => {
+		if (!display) {
+			dispatch({
+				type: RouterItemConfigurable.update,
+				payload: {
+					key: id,
+					routerInterface: {
+						...routerInter,
+						dhcp: {
+							network: "",
+							defaultRouter: "",
+							dnsServer: "",
+							poolName: "",
+							excluded: [],
+						},
+					},
+				},
+			});
+			clearFormulario();
+		}
+	}, [display]);
 	return (
 		<>
 			<div className="container dhcp-config">

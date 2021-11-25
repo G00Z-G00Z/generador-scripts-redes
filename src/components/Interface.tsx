@@ -8,6 +8,7 @@ import { RouterItemConfigurable } from "../reducers/RouterConfigReducer";
 import { RouterInterface, RouterInterfaceCables } from "../types/redes-types";
 import { useToggle } from "../hooks/useToggle";
 import { DhcpConfig } from "./DhcpConfig";
+import { InputUseForm } from "./InputUseForm";
 
 type CableTypes = "serial" | "fastethernet" | "gigabitethernet";
 
@@ -84,18 +85,12 @@ export const Interface: FC<{ id: string; routerInter: RouterInterface }> = ({
 					}}
 				/>
 			)}
-			<label htmlFor="portnumber" className="form-label">
-				Poner el port number
-			</label>
-			<input
-				type="text"
-				className="form-control"
-				name="portnumber"
-				placeholder="portnumber del router"
+			<InputUseForm
+				label="Pon el port number"
+				name="port"
+				onChange={onChange}
+				placeHolder="Port number"
 				value={port}
-				onChange={(e) => {
-					onChange(e.target.value, "port");
-				}}
 			/>
 			<strong>Ip address</strong> <br />
 			<small>Pones la direccion normal y luego pones diagonal algo</small>
@@ -122,18 +117,12 @@ export const Interface: FC<{ id: string; routerInter: RouterInterface }> = ({
 					}}
 				/>
 			</div>
-			<label htmlFor="description" className="form-label">
-				Poner la descripción
-			</label>
-			<input
-				type="text"
-				className="form-control"
-				name="description"
-				placeholder="description del router"
+			<InputUseForm
+				label="Pon el description"
+				name="descriptionForm"
+				onChange={onChange}
+				placeHolder="description"
 				value={descriptionForm}
-				onChange={(e) => {
-					onChange(e.target.value, "descriptionForm");
-				}}
 			/>
 			<DhcpConfig id={id} routerInter={routerInter} />
 		</div>
