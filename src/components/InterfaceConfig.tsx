@@ -26,32 +26,37 @@ export const InterfaceConfig = () => {
 
 	return (
 		<>
-			<h2>Configuración de las interfaces</h2>
-			<div className="interfaces container" ref={divRef}>
+			<h3>Configuración de las interfaces</h3>
+			<div className="interfaces" ref={divRef}>
 				{Array.from(routerConfig.interfaces, (pair) => {
 					const [key, inter] = pair;
 
 					return (
-						<div key={key} className="interface">
-							<Interface id={key} routerInter={inter} />
-							<button
-								className="btn btn-danger"
-								onClick={() => {
-									dispatch({
-										type: RouterItemConfigurable.eraseInterface,
-										payload: {
-											key,
-										},
-									});
-								}}
-							>
-								Eliminar Interface
-							</button>
+						<div key={key} className="interface row">
+							<div className="my-1">
+								<Interface id={key} routerInter={inter} />
+								<button
+									className="btn btn-danger col-4 offset-8"
+									onClick={() => {
+										dispatch({
+											type: RouterItemConfigurable.eraseInterface,
+											payload: {
+												key,
+											},
+										});
+									}}
+								>
+									Eliminar Interface
+								</button>
+							</div>
 						</div>
 					);
 				})}
 			</div>
-			<button className="btn btn-success" onClick={handleAdding}>
+			<button
+				className="btn btn-success col-6 offset-3 mt-2"
+				onClick={handleAdding}
+			>
 				Add interface
 			</button>
 		</>

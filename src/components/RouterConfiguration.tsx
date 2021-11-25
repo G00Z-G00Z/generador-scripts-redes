@@ -4,8 +4,14 @@ import { InterfaceConfig } from "./InterfaceConfig";
 export const RouterConfiguration = () => {
 	return (
 		<>
-			<BasicRouterConfig />
-			<InterfaceConfig />
+			<div className="container">
+				<div className="row">
+					<BasicRouterConfig />
+				</div>
+				<div className="row">
+					<InterfaceConfig />
+				</div>
+			</div>
 		</>
 	);
 };

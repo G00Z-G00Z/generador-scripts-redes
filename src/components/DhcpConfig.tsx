@@ -63,7 +63,15 @@ export const DhcpConfig: FC<Props> = ({ id_interface, id_dhcp, dhcpInter }) => {
 
 	return (
 		<>
+			<h5>DHCP Configuration {poolName ?? ""}</h5>
 			<div className="dhcp-config-form">
+				<InputUseForm
+					label="Pon el nombre del pool name"
+					onChange={onChange}
+					value={poolName}
+					placeHolder={"Pon el poolName"}
+					name={"poolName"}
+				/>
 				<InputUseForm
 					label="Pon el default router"
 					onChange={onChange}
@@ -85,13 +93,7 @@ export const DhcpConfig: FC<Props> = ({ id_interface, id_dhcp, dhcpInter }) => {
 					placeHolder={"Pon el network"}
 					name={"network"}
 				/>
-				<InputUseForm
-					label="Pon el nombre del pool name"
-					onChange={onChange}
-					value={poolName}
-					placeHolder={"Pon el poolName"}
-					name={"poolName"}
-				/>
+
 				<InputUseForm
 					label="Pon las ip excluidas, separadas por commas"
 					onChange={onChange}

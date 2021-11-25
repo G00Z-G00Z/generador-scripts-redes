@@ -25,11 +25,11 @@ export const RouterConfigurationScreen = () => {
 			}}
 		>
 			<div className="container mb-5">
-				<h1>Configuracion del router</h1>
 				<p>
 					<b>¿Como usarlo?</b> <br /> Puedes usar la configuracion llenando la
 					informacion necesaria en las siguientes partes
 				</p>
+				<h2>Configuracion de {routerConfig.hostname || "router"}</h2>
 				<RouterConfiguration />
 				<GenratedScript />
 			</div>
