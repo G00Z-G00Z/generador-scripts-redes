@@ -16,7 +16,8 @@ export const Interface: FC<{ id: string; routerInter: RouterInterface }> = ({
 	id,
 	routerInter,
 }) => {
-	const { description, interfaceCableType, ipMask, ipAddress } = routerInter;
+	const { description, interfaceCableType, ipMask, ipAddress, dhcp } =
+		routerInter;
 
 	const { dispatch } = useContext(RouterConfigContext);
 

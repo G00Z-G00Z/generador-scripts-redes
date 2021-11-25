@@ -1,18 +1,19 @@
 import React, { FC, useContext, useEffect } from "react";
 import { useToggle } from "../hooks/useToggle";
 import { CheckBoxes } from "./CheckBoxes";
-import { RouterInterface } from "../types/redes-types";
+import { DHCPConfiguration, RouterInterface } from "../types/redes-types";
 import { useForm } from "../hooks/useForm";
 import { InputUseForm } from "./InputUseForm";
 import { RouterConfigContext } from "../context/ReactConfigContext";
 import { RouterItemConfigurable } from "../reducers/RouterConfigReducer";
 
 interface Props {
-	id: string;
-	routerInter: RouterInterface;
+	id_interface: string;
+	routerInter: DHCPConfiguration;
+	id_dhcp: string;
 }
 
-export const DhcpConfig: FC<Props> = ({ id, routerInter }) => {
+export const DhcpConfig: FC<Props> = ({ id, routerInter: dhcpInter }) => {
 	const { dispatch } = useContext(RouterConfigContext);
 
 	const [display, toggle] = useToggle(false);
@@ -27,11 +28,11 @@ export const DhcpConfig: FC<Props> = ({ id, routerInter }) => {
 		onChange,
 		clearFormulario,
 	} = useForm({
-		network: routerInter.dhcp.network,
-		defaultRouter: routerInter.dhcp.defaultRouter,
-		dnsServer: routerInter.dhcp.dnsServer,
-		poolName: routerInter.dhcp.poolName,
-		excluded: routerInter.dhcp.excluded.join(","),
+		network: dhcpInter.network,
+		defaultRouter: dhcpInter.defaultRouter,
+		dnsServer: dhcpInter.dnsServer,
+		poolName: dhcpInter.poolName,
+		excluded: dhcpInter.excluded.join(","),
 	});
 
 	useEffect(() => {
@@ -44,7 +45,7 @@ export const DhcpConfig: FC<Props> = ({ id, routerInter }) => {
 			payload: {
 				key: id,
 				routerInterface: {
-					...routerInter,
+					...dhcpInter,
 					dhcp: {
 						network,
 						defaultRouter,
@@ -64,7 +65,7 @@ export const DhcpConfig: FC<Props> = ({ id, routerInter }) => {
 				payload: {
 					key: id,
 					routerInterface: {
-						...routerInter,
+						...dhcpInter,
 						dhcp: {
 							network: "",
 							defaultRouter: "",

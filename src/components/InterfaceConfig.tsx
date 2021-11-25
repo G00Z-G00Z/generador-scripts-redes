@@ -4,10 +4,7 @@ import { useContext } from "react";
 import { RouterConfigContext } from "../context/ReactConfigContext";
 import { useEffect } from "react";
 import { RouterItemConfigurable } from "../reducers/RouterConfigReducer";
-
-function* keyGeneratorFunc() {
-	for (let i = 0; ; i++) yield i.toString();
-}
+import { keyGeneratorFunc } from "../utils/keyGenerator";
 
 const keyGenerator = keyGeneratorFunc();
 

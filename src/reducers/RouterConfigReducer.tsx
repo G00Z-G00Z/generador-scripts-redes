@@ -1,22 +1,5 @@
 import { Router, RouterInterface } from "../types/redes-types";
 
-const emptyRouterInterface: RouterInterface = {
-	description: "",
-	interfaceCableType: {
-		type: "fastethernet",
-		port: "",
-	},
-	ipAddress: "",
-	ipMask: "",
-	dhcp: {
-		defaultRouter: "",
-		dnsServer: "",
-		excluded: [],
-		network: "",
-		poolName: "",
-	},
-};
-
 export enum RouterItemConfigurable {
 	hostname,
 	banner,

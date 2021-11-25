@@ -1,16 +1,7 @@
 import { createContext } from "react";
 import { RouterActions } from "../reducers/RouterConfigReducer";
-import { Router, RouterInterface } from "../types/redes-types";
-export const emptyRouterConfiguration: Router = {
-	hostname: "",
-	interfaces: new Map<string, RouterInterface>(),
-	security: {
-		bannerMord: "",
-		encription: false,
-		lineConsole: false,
-		vty: false,
-	},
-};
+import { Router } from "../types/redes-types";
+import { emptyRouterConfiguration } from "../utils/emptyInterfaces";
 
 export const RouterConfigContext = createContext<{
 	routerConfig: Router;

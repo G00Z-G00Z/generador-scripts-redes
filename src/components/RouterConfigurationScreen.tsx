@@ -2,12 +2,10 @@ import React, { useReducer } from "react";
 import { GenratedScript } from "./GenratedScript";
 import { RouterConfiguration } from "./RouterConfiguration";
 
-import {
-	RouterConfigContext,
-	emptyRouterConfiguration,
-} from "../context/ReactConfigContext";
+import { RouterConfigContext } from "../context/ReactConfigContext";
 import { RouterReducer } from "../reducers/RouterConfigReducer";
 import { useEffect } from "react";
+import { emptyRouterConfiguration } from "../utils/emptyInterfaces";
 
 export const RouterConfigurationScreen = () => {
 	const [routerConfig, dispatch] = useReducer(
