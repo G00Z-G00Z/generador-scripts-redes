@@ -42,7 +42,7 @@ export type RouterInterface = {
     description: string,
     ipAddress: string,
     ipMask: string,
-    dhcp?: DHCPConfiguration,
+    dhcp: DHCPConfiguration,
 }
 
 // Router

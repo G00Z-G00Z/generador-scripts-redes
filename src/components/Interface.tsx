@@ -7,6 +7,7 @@ import { RouterConfigContext } from "../context/ReactConfigContext";
 import { RouterItemConfigurable } from "../reducers/RouterConfigReducer";
 import { RouterInterface, RouterInterfaceCables } from "../types/redes-types";
 import { useToggle } from "../hooks/useToggle";
+import { DhcpConfig } from "./DhcpConfig";
 
 type CableTypes = "serial" | "fastethernet" | "gigabitethernet";
 
@@ -50,6 +51,7 @@ export const Interface: FC<{ id: string; routerInter: RouterInterface }> = ({
 			payload: {
 				key: id,
 				routerInterface: {
+					...routerInter,
 					description: descriptionForm,
 					interfaceCableType: cableInter,
 					ipAddress: ipAdd,
@@ -133,6 +135,7 @@ export const Interface: FC<{ id: string; routerInter: RouterInterface }> = ({
 					onChange(e.target.value, "descriptionForm");
 				}}
 			/>
+			<DhcpConfig id={id} routerInter={routerInter} />
 		</div>
 	);
 };

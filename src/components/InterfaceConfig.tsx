@@ -1,11 +1,9 @@
-import React, { useRef, FC } from "react";
+import React, { useRef } from "react";
 import { Interface } from "./Interface";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { RouterConfigContext } from "../context/ReactConfigContext";
 import { useEffect } from "react";
-import { RouterInterface } from "../types/redes-types";
 import { RouterItemConfigurable } from "../reducers/RouterConfigReducer";
-import { RouterConfigurationScreen } from "./RouterConfigurationScreen";
 
 function* keyGeneratorFunc() {
 	for (let i = 0; ; i++) yield i.toString();

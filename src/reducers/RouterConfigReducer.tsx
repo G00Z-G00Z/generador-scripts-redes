@@ -8,6 +8,13 @@ const emptyRouterInterface: RouterInterface = {
 	},
 	ipAddress: "",
 	ipMask: "",
+	dhcp: {
+		defaultRouter: "",
+		dnsServer: "",
+		excluded: [],
+		network: "",
+		poolName: "",
+	},
 };
 
 export enum RouterItemConfigurable {
