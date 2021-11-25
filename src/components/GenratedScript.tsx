@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { RouterConfigContext } from "../context/ReactConfigContext";
+import { router2script } from "../utils/router2script";
 
 export const GenratedScript = () => {
 	const { routerConfig } = useContext(RouterConfigContext);
@@ -13,6 +14,7 @@ export const GenratedScript = () => {
 
 		timeId.current = setTimeout(() => {
 			setTextJson(JSON.stringify(routerConfig, null, 2));
+			setTextScript(router2script(routerConfig));
 		}, 1000);
 	}, [routerConfig]);
 
