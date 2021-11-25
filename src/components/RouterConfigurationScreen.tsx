@@ -54,7 +54,7 @@ export const RouterConfigurationScreen: FC<Props> = ({
 					informacion necesaria en las siguientes partes
 				</p>
 				<h2 className="text-center">
-					Configuracion de {routerConfig.hostname || "router"}
+					Configuracion de {`Router::${routerConfig.hostname}` || "router"}
 				</h2>
 				<RouterConfiguration />
 				<GenratedScript />

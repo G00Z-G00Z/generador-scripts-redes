@@ -62,7 +62,7 @@ export const DhcpConfig: FC<Props> = ({ id_interface, id_dhcp, dhcpInter }) => {
 
 	return (
 		<>
-			<h5>DHCP Configuration {poolName ?? ""}</h5>
+			<h5>DHCP Configuration {`DHCP::${poolName}` ?? ""}</h5>
 			<div className="dhcp-config-form">
 				<InputUseForm
 					label="Pon el nombre del pool name"
