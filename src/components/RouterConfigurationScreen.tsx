@@ -1,27 +1,45 @@
-import React, { useReducer } from "react";
+import React, { useReducer, FC, useEffect } from "react";
 import { GenratedScript } from "./GenratedScript";
 import { RouterConfiguration } from "./RouterConfiguration";
 
 import { RouterConfigContext } from "../context/ReactConfigContext";
 import { RouterReducer } from "../reducers/RouterConfigReducer";
-import { useEffect } from "react";
-import { emptyRouterConfiguration } from "../utils/emptyInterfaces";
-import { useLocalStorage } from "../hooks/useLocalStorage";
 
-export const RouterConfigurationScreen = () => {
-	const { setValue, value } = useLocalStorage(
-		"routerConfig",
-		emptyRouterConfiguration
+import { Router } from "../types/redes-types";
+import { useSessionStorage } from "../hooks/useLocalStorage";
+import { emptyRouterConfiguration } from "../utils/emptyInterfaces";
+
+interface Props {
+	routerConfigParameters: Router;
+	updateRouter: (key: string, r: Router) => void;
+	id: string;
+}
+// Missing clean up
+
+export const RouterConfigurationScreen: FC<Props> = ({
+	routerConfigParameters,
+	updateRouter,
+	id,
+}) => {
+	const [value, setValue, removeValue] = useSessionStorage(
+		`router_${id}`,
+		routerConfigParameters
 	);
 
 	const [routerConfig, dispatch] = useReducer(
 		RouterReducer,
-		value ?? emptyRouterConfiguration
+		value || emptyRouterConfiguration
 	);
 
 	useEffect(() => {
 		setValue(routerConfig);
 	}, [routerConfig, setValue]);
+
+	useEffect(() => {
+		return () => {
+			removeValue();
+		};
+	}, []);
 
 	return (
 		<RouterConfigContext.Provider

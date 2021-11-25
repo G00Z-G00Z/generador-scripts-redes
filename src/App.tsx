@@ -1,8 +1,8 @@
-import { RouterConfigurationScreen } from "./components/RouterConfigurationScreen";
+import { RouterApp } from "./components/RouterApp";
 function App() {
 	return (
 		<>
-			<RouterConfigurationScreen />
+			<RouterApp />
 		</>
 	);
 }
