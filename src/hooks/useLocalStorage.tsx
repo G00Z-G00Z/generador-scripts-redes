@@ -7,7 +7,11 @@ export function useSessionStorage<T>(key: string, defaultValue: T) {
 	return useStorage(key, defaultValue, window.sessionStorage);
 }
 
-function useStorage<T>(key: string, defaultValue: T, storageObject: Storage) {
+function useStorage<T>(
+	key: string,
+	defaultValue: T,
+	storageObject: Storage
+): [T | undefined, (v: T) => void, () => void] {
 	const [value, setValue] = useState<T | undefined>(() => {
 		const jsonValue = storageObject.getItem(key);
 		if (jsonValue !== null) return JSON.parse(jsonValue) as T;
@@ -23,5 +27,5 @@ function useStorage<T>(key: string, defaultValue: T, storageObject: Storage) {
 		setValue(undefined);
 	}, []);
 
-	return { value, removeValue, setValue };
+	return [value, setValue, removeValue];
 }
