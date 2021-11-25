@@ -44,7 +44,7 @@ export const InterfaceConfig = () => {
 										});
 									}}
 								>
-									Eliminar {inter.description || "Interface"}
+									Eliminar interface
 								</button>
 							</div>
 						</div>

@@ -171,7 +171,7 @@ export const Interface: FC<{ id: string; routerInter: RouterInterface }> = ({
 							payload: {
 								dhcp_id: keyGenerator?.next()?.value ?? "1",
 								interface_id: id,
-								dhcp_inter: emptyDhcpConfiguration,
+								dhcp_inter: { ...emptyDhcpConfiguration },
 							},
 						});
 					}}

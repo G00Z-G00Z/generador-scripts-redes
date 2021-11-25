@@ -1,10 +1,9 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSessionStorage } from "../hooks/useLocalStorage";
 import { Router } from "../types/redes-types";
 import { keyGeneratorFunc } from "../utils/keyGenerator";
 import { RouterConfigurationScreen } from "./RouterConfigurationScreen";
 import { emptyRouterConfiguration } from "../utils/emptyInterfaces";
-import { ListRouterReducer } from "../reducers/ListRouterReducer";
 
 const keyGenerator = keyGeneratorFunc();
 
@@ -69,7 +68,10 @@ export const RouterApp = () => {
 						newKey = (keyGenerator.next()?.value ?? "1") as string;
 					} while (allRouters[newKey]);
 
-					setAllRouters({ ...allRouters, [newKey]: emptyRouterConfiguration });
+					setAllRouters({
+						...allRouters,
+						[newKey]: { ...emptyRouterConfiguration },
+					});
 				}}
 			>
 				Add Router
