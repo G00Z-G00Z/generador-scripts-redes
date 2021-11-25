@@ -6,7 +6,7 @@ import {
 
 export const emptyRouterConfiguration: Router = {
 	hostname: "",
-	interfaces: new Map<string, RouterInterface>(),
+	interfaces: {},
 	security: {
 		bannerMord: "",
 		encription: false,
@@ -23,7 +23,7 @@ export const emptyRouterInterface: RouterInterface = {
 	},
 	ipAddress: "",
 	ipMask: "",
-	dhcp: new Map<string, DHCPConfiguration>(),
+	dhcp: {},
 };
 
 export const emptyDhcpConfiguration: DHCPConfiguration = {

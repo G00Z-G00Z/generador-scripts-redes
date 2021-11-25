@@ -24,12 +24,14 @@ export const RouterConfigurationScreen = () => {
 				dispatch,
 			}}
 		>
-			<div className="container mb-5">
+			<div className="container mb-5 px-5">
 				<p>
 					<b>¿Como usarlo?</b> <br /> Puedes usar la configuracion llenando la
 					informacion necesaria en las siguientes partes
 				</p>
-				<h2>Configuracion de {routerConfig.hostname || "router"}</h2>
+				<h2 className="text-center">
+					Configuracion de {routerConfig.hostname || "router"}
+				</h2>
 				<RouterConfiguration />
 				<GenratedScript />
 			</div>

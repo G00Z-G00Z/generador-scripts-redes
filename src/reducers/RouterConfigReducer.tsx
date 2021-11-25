@@ -101,34 +101,46 @@ export const RouterReducer = (
 			return newState;
 		case RouterItemConfigurable.eraseInterface:
 			newState = { ...router };
-			newState.interfaces.delete(action.payload.key);
+			delete newState.interfaces[action.payload.key];
 			return newState;
 
 		case RouterItemConfigurable.update: {
 			newState = { ...router };
-			newState.interfaces.set(
-				action.payload.key,
-				action.payload.routerInterface
-			);
+
+			const { key, routerInterface } = action.payload;
+
+			newState.interfaces[key] = routerInterface;
+
 			return newState;
 		}
-		case RouterItemConfigurable.createNewInterface:
+		case RouterItemConfigurable.createNewInterface: {
 			newState = { ...router };
-			newState.interfaces.set(action.payload.key, { ...emptyRouterInterface });
-			return newState;
 
+			const { key } = action.payload;
+
+			newState.interfaces[key] = { ...emptyRouterInterface };
+
+			return newState;
+		}
 		case RouterItemConfigurable.updateDhcp: {
 			const { dhcp_id, interface_id, dhcp_inter } = action.payload;
+
 			newState = { ...router };
-			newState.interfaces.get(interface_id)?.dhcp?.set(dhcp_id, dhcp_inter);
+			console.log("Estoy añadiendo una");
+
+			if (!newState.interfaces?.[interface_id]) return router;
+
+			newState.interfaces[interface_id].dhcp[dhcp_id] = dhcp_inter;
+
 			return newState;
 		}
 
 		case RouterItemConfigurable.deleteDhcp: {
 			const { dhcp_id, interface_id } = action.payload;
+
 			newState = { ...router };
 
-			newState.interfaces.get(interface_id)?.dhcp?.delete(dhcp_id);
+			delete newState.interfaces[interface_id].dhcp[dhcp_id];
 
 			return newState;
 		}

@@ -69,7 +69,7 @@ export const Interface: FC<{ id: string; routerInter: RouterInterface }> = ({
 
 	return (
 		<div className="container">
-			<h4>Configuración para {descriptionForm}</h4>
+			<h4 className="text-center">Configuración para {descriptionForm}</h4>
 			<div className="row">
 				<div className="col-6">
 					<strong>Select Type of cable</strong>
@@ -141,7 +141,8 @@ export const Interface: FC<{ id: string; routerInter: RouterInterface }> = ({
 				/>
 			</div>
 			<div className="dhcp-config-container mt-4">
-				{Array.from(dhcp, ([key, config]) => {
+				{Object.keys(dhcp).map((key) => {
+					const config = dhcp[key];
 					return (
 						<div key={key}>
 							<DhcpConfig id_dhcp={key} id_interface={id} dhcpInter={config} />

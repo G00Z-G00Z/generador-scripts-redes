@@ -1,5 +1,4 @@
 import React, { FC, useContext, useEffect } from "react";
-import { CheckBoxes } from "./CheckBoxes";
 import { DHCPConfiguration } from "../types/redes-types";
 import { useForm } from "../hooks/useForm";
 import { InputUseForm } from "./InputUseForm";

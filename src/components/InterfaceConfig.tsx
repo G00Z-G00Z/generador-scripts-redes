@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import { Interface } from "./Interface";
 import { useContext } from "react";
 import { RouterConfigContext } from "../context/ReactConfigContext";
-import { useEffect } from "react";
 import { RouterItemConfigurable } from "../reducers/RouterConfigReducer";
 import { keyGeneratorFunc } from "../utils/keyGenerator";
 
@@ -28,9 +27,8 @@ export const InterfaceConfig = () => {
 		<>
 			<h3>Configuración de las interfaces</h3>
 			<div className="interfaces" ref={divRef}>
-				{Array.from(routerConfig.interfaces, (pair) => {
-					const [key, inter] = pair;
-
+				{Object.keys(routerConfig.interfaces).map((key) => {
+					const inter = routerConfig.interfaces[key];
 					return (
 						<div key={key} className="interface row">
 							<div className="my-1">
@@ -46,7 +44,7 @@ export const InterfaceConfig = () => {
 										});
 									}}
 								>
-									Eliminar Interface
+									Eliminar {inter.description || "Interface"}
 								</button>
 							</div>
 						</div>

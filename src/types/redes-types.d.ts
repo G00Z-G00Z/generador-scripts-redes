@@ -42,7 +42,9 @@ export type RouterInterface = {
     description: string,
     ipAddress: string,
     ipMask: string,
-    dhcp: Map<string, DHCPConfiguration>,
+    dhcp: {
+        [key: string]: DHCPConfiguration
+    },
 }
 
 // Router
@@ -54,7 +56,9 @@ export interface Router {
         encription: boolean,
         bannerMord: string
     }
-    interfaces: Map<string, RouterInterface>
+    interfaces: {
+        [key: string]: RouterInterface
+    }
 
 }
 
