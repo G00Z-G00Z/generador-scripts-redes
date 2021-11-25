@@ -1,4 +1,9 @@
-import { Router, RouterInterface } from "../types/redes-types";
+import { emptyRouterInterface } from "../utils/emptyInterfaces";
+import {
+	DHCPConfiguration,
+	Router,
+	RouterInterface,
+} from "../types/redes-types";
 
 export enum RouterItemConfigurable {
 	hostname,
@@ -9,12 +14,29 @@ export enum RouterItemConfigurable {
 	eraseInterface,
 	update,
 	createNewInterface,
+	deleteDhcp,
+	updateDhcp,
 }
 
 export type RouterActions =
 	| {
 			type: RouterItemConfigurable.hostname;
 			payload: string;
+	  }
+	| {
+			type: RouterItemConfigurable.deleteDhcp;
+			payload: {
+				interface_id: string;
+				dhcp_id: string;
+			};
+	  }
+	| {
+			type: RouterItemConfigurable.updateDhcp;
+			payload: {
+				interface_id: string;
+				dhcp_id: string;
+				dhcp_inter: DHCPConfiguration;
+			};
 	  }
 	| {
 			type: RouterItemConfigurable.banner;
@@ -92,10 +114,24 @@ export const RouterReducer = (
 		}
 		case RouterItemConfigurable.createNewInterface:
 			newState = { ...router };
-
 			newState.interfaces.set(action.payload.key, { ...emptyRouterInterface });
 			return newState;
 
+		case RouterItemConfigurable.updateDhcp: {
+			const { dhcp_id, interface_id, dhcp_inter } = action.payload;
+			newState = { ...router };
+			newState.interfaces.get(interface_id)?.dhcp?.set(dhcp_id, dhcp_inter);
+			return newState;
+		}
+
+		case RouterItemConfigurable.deleteDhcp: {
+			const { dhcp_id, interface_id } = action.payload;
+			newState = { ...router };
+
+			newState.interfaces.get(interface_id)?.dhcp?.delete(dhcp_id);
+
+			return newState;
+		}
 		default:
 			return router;
 	}

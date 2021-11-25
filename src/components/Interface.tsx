@@ -9,8 +9,12 @@ import { RouterInterface, RouterInterfaceCables } from "../types/redes-types";
 import { useToggle } from "../hooks/useToggle";
 import { DhcpConfig } from "./DhcpConfig";
 import { InputUseForm } from "./InputUseForm";
+import { keyGeneratorFunc } from "../utils/keyGenerator";
+import { emptyDhcpConfiguration } from "../utils/emptyInterfaces";
 
 type CableTypes = "serial" | "fastethernet" | "gigabitethernet";
+
+const keyGenerator = keyGeneratorFunc();
 
 export const Interface: FC<{ id: string; routerInter: RouterInterface }> = ({
 	id,
@@ -125,7 +129,30 @@ export const Interface: FC<{ id: string; routerInter: RouterInterface }> = ({
 				placeHolder="description"
 				value={descriptionForm}
 			/>
-			<DhcpConfig id={id} routerInter={routerInter} />
+			<div className="container dhcp-config-container">
+				{Array.from(dhcp, ([key, config]) => {
+					return (
+						<div className="container" key={key}>
+							<DhcpConfig id_dhcp={key} id_interface={id} dhcpInter={config} />
+						</div>
+					);
+				})}
+				<button
+					className="btn btn-success"
+					onClick={() => {
+						dispatch({
+							type: RouterItemConfigurable.updateDhcp,
+							payload: {
+								dhcp_id: keyGenerator?.next()?.value ?? "1",
+								interface_id: id,
+								dhcp_inter: emptyDhcpConfiguration,
+							},
+						});
+					}}
+				>
+					Add new dhcp
+				</button>
+			</div>
 		</div>
 	);
 };

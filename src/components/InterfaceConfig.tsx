@@ -14,8 +14,8 @@ export const InterfaceConfig = () => {
 	const divRef = useRef<null | HTMLDivElement>(null);
 
 	const handleAdding = () => {
-		console.log("Estoy añadiendo el mapa");
-		const key = keyGenerator?.next()?.value ?? "1";
+		const key = (keyGenerator?.next()?.value as string) ?? "1";
+
 		dispatch({
 			type: RouterItemConfigurable.createNewInterface,
 			payload: {
@@ -23,10 +23,6 @@ export const InterfaceConfig = () => {
 			},
 		});
 	};
-
-	useEffect(() => {
-		console.log("Cambio el mapa!!");
-	}, [routerConfig.interfaces]);
 
 	return (
 		<>
