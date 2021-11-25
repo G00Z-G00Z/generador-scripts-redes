@@ -134,6 +134,20 @@ export const Interface: FC<{ id: string; routerInter: RouterInterface }> = ({
 					return (
 						<div className="container" key={key}>
 							<DhcpConfig id_dhcp={key} id_interface={id} dhcpInter={config} />
+							<button
+								className="btn btn-danger"
+								onClick={() => {
+									dispatch({
+										type: RouterItemConfigurable.deleteDhcp,
+										payload: {
+											dhcp_id: key,
+											interface_id: id,
+										},
+									});
+								}}
+							>
+								Delete dhcp
+							</button>
 						</div>
 					);
 				})}

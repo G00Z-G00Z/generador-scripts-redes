@@ -1,5 +1,4 @@
 import React, { FC, useContext, useEffect } from "react";
-import { useToggle } from "../hooks/useToggle";
 import { CheckBoxes } from "./CheckBoxes";
 import { DHCPConfiguration } from "../types/redes-types";
 import { useForm } from "../hooks/useForm";
@@ -16,8 +15,6 @@ interface Props {
 export const DhcpConfig: FC<Props> = ({ id_interface, id_dhcp, dhcpInter }) => {
 	const { dispatch } = useContext(RouterConfigContext);
 
-	const [display, toggle] = useToggle(false);
-
 	const {
 		defaultRouter,
 		dnsServer,
@@ -26,7 +23,6 @@ export const DhcpConfig: FC<Props> = ({ id_interface, id_dhcp, dhcpInter }) => {
 		excluded,
 		formulario,
 		onChange,
-		clearFormulario,
 	} = useForm({
 		network: dhcpInter.network,
 		defaultRouter: dhcpInter.defaultRouter,
@@ -41,93 +37,68 @@ export const DhcpConfig: FC<Props> = ({ id_interface, id_dhcp, dhcpInter }) => {
 			.map((cosa) => cosa.trim());
 
 		dispatch({
-			type: RouterItemConfigurable.update,
+			type: RouterItemConfigurable.updateDhcp,
 			payload: {
-				key: id,
-				routerInterface: {
-					...dhcpInter,
-					dhcp: {
-						network,
-						defaultRouter,
-						dnsServer,
-						poolName,
-						excluded: excludedAdds,
-					},
+				dhcp_id: id_dhcp,
+				interface_id: id_interface,
+				dhcp_inter: {
+					network,
+					defaultRouter,
+					dnsServer,
+					poolName,
+					excluded: excludedAdds,
 				},
 			},
 		});
-	}, [defaultRouter, dispatch, dnsServer, excluded, id, network, poolName]);
+	}, [
+		defaultRouter,
+		dispatch,
+		dnsServer,
+		excluded,
+		network,
+		poolName,
+		id_dhcp,
+		id_interface,
+	]);
 
-	useEffect(() => {
-		if (!display) {
-			dispatch({
-				type: RouterItemConfigurable.update,
-				payload: {
-					key: id,
-					routerInterface: {
-						...dhcpInter,
-						dhcp: {
-							network: "",
-							defaultRouter: "",
-							dnsServer: "",
-							poolName: "",
-							excluded: [],
-						},
-					},
-				},
-			});
-			clearFormulario();
-		}
-	}, [display]);
 	return (
 		<>
-			<div className="container dhcp-config">
-				<CheckBoxes
-					onChange={toggle}
-					value={display}
-					label="Configuración dhcp"
-					name="toggle-dhcp"
+			<div className="dhcp-config-form">
+				<InputUseForm
+					label="Pon el default router"
+					onChange={onChange}
+					value={defaultRouter}
+					placeHolder={"Pon el defaultRouter"}
+					name={"defaultRouter"}
 				/>
-
-				{display && (
-					<div>
-						<InputUseForm
-							label="Pon el default router"
-							onChange={onChange}
-							value={defaultRouter}
-							placeHolder={"Pon el defaultRouter"}
-							name={"defaultRouter"}
-						/>
-						<InputUseForm
-							label="Pon la ip del dnsServer"
-							onChange={onChange}
-							value={dnsServer}
-							placeHolder={"Pon el dnsServer"}
-							name={"dnsServer"}
-						/>
-						<InputUseForm
-							label="Pon la ip del network"
-							onChange={onChange}
-							value={network}
-							placeHolder={"Pon el network"}
-							name={"network"}
-						/>
-						<InputUseForm
-							label="Pon el nombre del pool name"
-							onChange={onChange}
-							value={poolName}
-							placeHolder={"Pon el poolName"}
-							name={"poolName"}
-						/>
-						<InputUseForm
-							label="Pon las ip excluidas, separadas por commas"
-							onChange={onChange}
-							value={excluded}
-							placeHolder={"Pon el excluded"}
-							name={"excluded"}
-						/>
-					</div>
-				)}
+				<InputUseForm
+					label="Pon la ip del dnsServer"
+					onChange={onChange}
+					value={dnsServer}
+					placeHolder={"Pon el dnsServer"}
+					name={"dnsServer"}
+				/>
+				<InputUseForm
+					label="Pon la ip del network"
+					onChange={onChange}
+					value={network}
+					placeHolder={"Pon el network"}
+					name={"network"}
+				/>
+				<InputUseForm
+					label="Pon el nombre del pool name"
+					onChange={onChange}
+					value={poolName}
+					placeHolder={"Pon el poolName"}
+					name={"poolName"}
+				/>
+				<InputUseForm
+					label="Pon las ip excluidas, separadas por commas"
+					onChange={onChange}
+					value={excluded}
+					placeHolder={"Pon el excluded"}
+					name={"excluded"}
+				/>
 			</div>
 		</>
 	);
