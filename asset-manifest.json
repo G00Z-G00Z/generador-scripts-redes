@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.js": "/generador-scripts-redes/static/js/main.e23fdc01.chunk.js",
+    "main.js.map": "/generador-scripts-redes/static/js/main.e23fdc01.chunk.js.map",
+    "runtime-main.js": "/generador-scripts-redes/static/js/runtime-main.03de0fd6.js",
+    "runtime-main.js.map": "/generador-scripts-redes/static/js/runtime-main.03de0fd6.js.map",
+    "static/js/2.38391e2e.chunk.js": "/generador-scripts-redes/static/js/2.38391e2e.chunk.js",
+    "static/js/2.38391e2e.chunk.js.map": "/generador-scripts-redes/static/js/2.38391e2e.chunk.js.map",
+    "index.html": "/generador-scripts-redes/index.html",
+    "static/js/2.38391e2e.chunk.js.LICENSE.txt": "/generador-scripts-redes/static/js/2.38391e2e.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.03de0fd6.js",
+    "static/js/2.38391e2e.chunk.js",
+    "static/js/main.e23fdc01.chunk.js"
+  ]
+}
