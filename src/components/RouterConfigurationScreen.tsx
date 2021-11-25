@@ -6,16 +6,22 @@ import { RouterConfigContext } from "../context/ReactConfigContext";
 import { RouterReducer } from "../reducers/RouterConfigReducer";
 import { useEffect } from "react";
 import { emptyRouterConfiguration } from "../utils/emptyInterfaces";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 export const RouterConfigurationScreen = () => {
-	const [routerConfig, dispatch] = useReducer(
-		RouterReducer,
+	const { setValue, value } = useLocalStorage(
+		"routerConfig",
 		emptyRouterConfiguration
 	);
 
+	const [routerConfig, dispatch] = useReducer(
+		RouterReducer,
+		value ?? emptyRouterConfiguration
+	);
+
 	useEffect(() => {
-		console.log("Se ha cambiado este pedo");
-	}, [routerConfig]);
+		setValue(routerConfig);
+	}, [routerConfig, setValue]);
 
 	return (
 		<RouterConfigContext.Provider
