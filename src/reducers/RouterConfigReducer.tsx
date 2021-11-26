@@ -1,9 +1,5 @@
 import { emptyRouterInterface } from "../utils/emptyInterfaces";
-import {
-	DHCPConfiguration,
-	Router,
-	RouterInterface,
-} from "../types/redes-types";
+import { Router, RouterInterface } from "../types/redes-types";
 
 export enum RouterItemConfigurable {
 	hostname,
@@ -15,6 +11,7 @@ export enum RouterItemConfigurable {
 	update,
 	createNewInterface,
 	setRip,
+	updateAllRouter,
 }
 
 export type RouterActions =
@@ -26,6 +23,12 @@ export type RouterActions =
 			type: RouterItemConfigurable.setRip;
 			payload: {
 				value: boolean;
+			};
+	  }
+	| {
+			type: RouterItemConfigurable.updateAllRouter;
+			payload: {
+				router: Router;
 			};
 	  }
 	| {
@@ -73,6 +76,8 @@ export const RouterReducer = (
 	switch (action.type) {
 		case RouterItemConfigurable.hostname:
 			return { ...router, hostname: action.payload };
+		case RouterItemConfigurable.updateAllRouter:
+			return action.payload.router;
 		case RouterItemConfigurable.banner:
 			newState = { ...router };
 			newState.security.bannerMord = action.payload;

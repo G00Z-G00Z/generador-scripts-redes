@@ -18,7 +18,6 @@ interface Props {
 
 export const RouterConfigurationScreen: FC<Props> = ({
 	routerConfigParameters,
-	updateRouter,
 	id,
 }) => {
 	const [value, setValue, removeValue] = useSessionStorage(
@@ -48,13 +47,12 @@ export const RouterConfigurationScreen: FC<Props> = ({
 				dispatch,
 			}}
 		>
-			<div className="container mb-5 px-5">
-				<p>
-					<b>¿Como usarlo?</b> <br /> Puedes usar la configuracion llenando la
-					informacion necesaria en las siguientes partes
-				</p>
+			<div className="container mb-3 border shadow-sm">
 				<h2 className="text-center">
-					Configuracion de {`Router::${routerConfig.hostname}` || "router"}
+					Configuracion de{" "}
+					{`${
+						routerConfig.hostname ? `router:${routerConfig.hostname}` : "router"
+					}`}
 				</h2>
 				<RouterConfiguration />
 				<GenratedScript />

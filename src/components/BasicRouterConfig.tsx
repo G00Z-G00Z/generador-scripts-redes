@@ -10,17 +10,17 @@ export const BasicRouterConfig = () => {
 	const { bannerMord, encription, lineConsole, vty } = security;
 
 	return (
-		<>
-			<h3>Configuración básica</h3>
-			<div className="col col-6">
+		<div className="row p-2">
+			<h3 className="text-center mt-2">Configuración básica</h3>
+			<div className="col col-5">
 				<label htmlFor="hostname" className="form-label">
-					Poner el hostname
+					Hostname del Router:
 				</label>
 				<input
 					type="text"
 					className="form-control"
 					name="hostname"
-					placeholder="Hostname del router"
+					placeholder="Hostname"
 					value={hostname}
 					onChange={(e) => {
 						dispatch({
@@ -30,13 +30,13 @@ export const BasicRouterConfig = () => {
 					}}
 				/>
 				<label htmlFor="banner" className="form-label">
-					Poner el banner
+					Poner el Banner motd
 				</label>
 				<input
 					type="text"
 					className="form-control"
 					name="banner"
-					placeholder="banner del router"
+					placeholder="banner"
 					value={bannerMord}
 					onChange={(e) => {
 						dispatch({
@@ -94,6 +94,6 @@ export const BasicRouterConfig = () => {
 					}}
 				/>
 			</div>
-		</>
+		</div>
 	);
 };

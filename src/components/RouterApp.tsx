@@ -33,9 +33,15 @@ export const RouterApp = () => {
 	}, [allRouters, setValue]);
 
 	return (
-		<div className="container">
+		<div className="container my-5 px-md-5 px-1">
+			<h1>Generador de Scripts de Router</h1>
+			<p>
+				Este es un generador de Scripts de router para el examen de redes. Para
+				usarlo, solamente picale al botón de "Add router" para añadir un router.{" "}
+			</p>
+			<h1>Routers</h1>
+
 			{Object.entries(allRouters).map(([key, router]) => {
-				console.log("Debería anadir un router aqui");
 				return (
 					<div className="container my-3" key={key}>
 						<RouterConfigurationScreen

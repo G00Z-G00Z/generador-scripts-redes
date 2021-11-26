@@ -5,10 +5,10 @@ export const RouterConfiguration = () => {
 	return (
 		<>
 			<div className="container">
-				<div className="row">
+				<div className="row border-top">
 					<BasicRouterConfig />
 				</div>
-				<div className="row">
+				<div className="row border-top">
 					<InterfaceConfig />
 				</div>
 			</div>

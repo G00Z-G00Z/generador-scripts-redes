@@ -9,19 +9,14 @@ import { RouterInterface, RouterInterfaceCables } from "../types/redes-types";
 import { useToggle } from "../hooks/useToggle";
 import { DhcpConfig } from "./DhcpConfig";
 import { InputUseForm } from "./InputUseForm";
-import { keyGeneratorFunc } from "../utils/keyGenerator";
-import { emptyDhcpConfiguration } from "../utils/emptyInterfaces";
 
 type CableTypes = "serial" | "fastethernet" | "gigabitethernet";
-
-const keyGenerator = keyGeneratorFunc();
 
 export const Interface: FC<{ id: string; routerInter: RouterInterface }> = ({
 	id,
 	routerInter,
 }) => {
-	const { description, interfaceCableType, ipMask, ipAddress, dhcp } =
-		routerInter;
+	const { description, interfaceCableType, ipMask, ipAddress } = routerInter;
 
 	const { dispatch } = useContext(RouterConfigContext);
 
@@ -69,7 +64,6 @@ export const Interface: FC<{ id: string; routerInter: RouterInterface }> = ({
 
 	return (
 		<div className="container">
-			<h4 className="text-center">Configuración para {descriptionForm}</h4>
 			<div className="row">
 				<div className="col-6">
 					<strong>Select Type of cable</strong>
