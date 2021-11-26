@@ -64,23 +64,23 @@ exit
 	}
 
 	// DHCP
-	for (const key in router.dhcp) {
-		const dhcpInter = router.dhcp[key];
+	// 	for (const key in router.dhcp) {
+	// 		const dhcpInter = router.dhcp[key];
 
-		let texto = `ip dhcp pool ${dhcpInter.poolName}
-default-router ${dhcpInter.defaultRouter}
-network ${dhcpInter.network}
-${dhcpInter.dnsServer ? `dns-server ${dhcpInter.dnsServer}` : ""}`;
+	// 		let texto = `ip dhcp pool ${dhcpInter.poolName}
+	// default-router ${dhcpInter.defaultRouter}
+	// network ${dhcpInter.network}
+	// ${dhcpInter.dnsServer ? `dns-server ${dhcpInter.dnsServer}` : ""}`;
 
-		dhcpInter.excluded.forEach((ex) => {
-			texto += `
-ip dhcp excluded-address ${ex}`;
-		});
+	// 		dhcpInter.excluded.forEach((ex) => {
+	// 			texto += `
+	// ip dhcp excluded-address ${ex}`;
+	// 		});
 
-		texto += "\nexit\n";
+	// 		texto += "\nexit\n";
 
-		script += texto;
-	}
+	// 		script += texto;
+	// 	}
 
 	// Rip
 

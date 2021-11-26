@@ -27,7 +27,8 @@ export type RouterActions =
 	| {
 			type: RouterItemConfigurable.deleteDhcp;
 			payload: {
-				id: string;
+				interface_id: string;
+				dhcp_id: string;
 			};
 	  }
 	| {
@@ -39,7 +40,8 @@ export type RouterActions =
 	| {
 			type: RouterItemConfigurable.updateDhcp;
 			payload: {
-				id: string;
+				interface_id: string;
+				dhcp_id: string;
 				dhcp_inter: DHCPConfiguration;
 			};
 	  }
@@ -132,21 +134,24 @@ export const RouterReducer = (
 			return newState;
 		}
 		case RouterItemConfigurable.updateDhcp: {
-			const { id, dhcp_inter } = action.payload;
+			const { dhcp_id, interface_id, dhcp_inter } = action.payload;
 
 			newState = { ...router };
+			console.log("Estoy añadiendo una");
 
-			newState.dhcp[id] = dhcp_inter;
+			if (!newState.interfaces?.[interface_id]) return router;
+
+			newState.interfaces[interface_id].dhcp[dhcp_id] = dhcp_inter;
 
 			return newState;
 		}
 
 		case RouterItemConfigurable.deleteDhcp: {
-			const { id } = action.payload;
+			const { dhcp_id, interface_id } = action.payload;
 
 			newState = { ...router };
 
-			delete newState.dhcp[id];
+			delete newState.interfaces[interface_id].dhcp[dhcp_id];
 
 			return newState;
 		}
