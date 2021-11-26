@@ -1,4 +1,5 @@
 import { Router } from "../types/redes-types";
+import { ipAddress2network } from "./ipAddress2network";
 import { number2subtnetMask } from "./numberToSubnetMask";
 
 const lineConsole = `enable secret cisco
@@ -16,20 +17,27 @@ const encription = "service password-encryption";
 
 // ! hacer que tenga mascara el dhcp network
 export const router2script = (router: Router): string => {
+	const { hostname, security, hasRip } = router;
+
 	let script = `
 enable
 configure terminal 
-hostname ${router.hostname}
-${router.security.lineConsole ? lineConsole : ""}
-${router.security.vty ? lineVty : ""}
-banner motd #${router.security.bannerMord}#
-${router.security.encription ? encription : ""}
+hostname ${hostname}
+${security.lineConsole ? lineConsole : ""}
+${security.vty ? lineVty : ""}
+banner motd #${security.bannerMord}#
+${security.encription ? encription : ""}
 `;
 
+	const ipAddressForRip: string[] = [];
+
+	// Interfaces
 	for (const key in router.interfaces) {
 		const inter = router.interfaces[key];
 
 		const { description, ipAddress, ipMask, interfaceCableType } = inter;
+
+		hasRip && ipAddressForRip.push(ipAddress);
 
 		let bitcount: number = 10;
 
@@ -55,6 +63,7 @@ exit
 		script += textoInterface;
 	}
 
+	// DHCP
 	for (const key in router.dhcp) {
 		const dhcpInter = router.dhcp[key];
 
@@ -73,5 +82,17 @@ ip dhcp excluded-address ${ex}`;
 		script += texto;
 	}
 
+	// Rip
+
+	if (hasRip) {
+		script += "router rip\nversion 2\n";
+
+		ipAddressForRip.forEach((ip) => {
+			const network = ipAddress2network(ip);
+			script += `network ${network}\n`;
+		});
+	}
+
+	script += "exit\n";
 	return script;
 };
