@@ -47,7 +47,7 @@ export const GenratedScript = () => {
 				configuración json. Si es válido, se generará el router.
 			</p>
 			<div className="row">
-				<p className="offset-5 col-md-5">
+				<p className="offset-md-5 col-md-5">
 					Adicionalmente, puedes desactivar que se genere aqui:
 				</p>
 				<div className="col-md-2 text">
