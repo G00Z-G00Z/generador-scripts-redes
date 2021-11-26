@@ -59,6 +59,7 @@ export interface Router {
     dhcp: {
         [key: string]: DHCPConfiguration
     },
+    hasRip: boolean
 
 }
 

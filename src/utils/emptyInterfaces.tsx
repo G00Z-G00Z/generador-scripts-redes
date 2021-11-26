@@ -14,6 +14,7 @@ export const emptyRouterConfiguration: Router = {
 		vty: false,
 	},
 	dhcp: {},
+	hasRip: false,
 };
 
 export const emptyRouterInterface: RouterInterface = {

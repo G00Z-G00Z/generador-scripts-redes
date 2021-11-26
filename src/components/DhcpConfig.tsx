@@ -75,7 +75,7 @@ export const DhcpConfig: FC<Props> = ({ id, dhcpInter }) => {
 					name={"dnsServer"}
 				/>
 				<InputUseForm
-					label="Pon la ip del network"
+					label="Pon la ip del network !FALTA MASK!"
 					onChange={onChange}
 					value={network}
 					placeHolder={"Pon el network"}

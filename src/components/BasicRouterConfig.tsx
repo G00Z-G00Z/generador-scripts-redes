@@ -5,7 +5,7 @@ import { RouterItemConfigurable } from "../reducers/RouterConfigReducer";
 export const BasicRouterConfig = () => {
 	const { routerConfig, dispatch } = useContext(RouterConfigContext);
 
-	const { hostname, security } = routerConfig;
+	const { hostname, security, hasRip } = routerConfig;
 
 	const { bannerMord, encription, lineConsole, vty } = security;
 
@@ -79,6 +79,17 @@ export const BasicRouterConfig = () => {
 						dispatch({
 							type: RouterItemConfigurable.vty,
 							payload: !vty,
+						});
+					}}
+				/>
+				<CheckBoxes
+					label={"Tiene rip"}
+					name={"vty"}
+					value={hasRip}
+					onChange={() => {
+						dispatch({
+							type: RouterItemConfigurable.setRip,
+							payload: { value: !hasRip },
 						});
 					}}
 				/>

@@ -49,9 +49,28 @@ ${isFemale ? "clock rate 64000" : ""}
 description ${description}
 ip address ${ipAddress} ${number2subtnetMask(bitcount)}
 no shutdown
-exit`;
+exit
+`;
 
 		script += textoInterface;
+	}
+
+	for (const key in router.dhcp) {
+		const dhcpInter = router.dhcp[key];
+
+		let texto = `ip dhcp pool ${dhcpInter.poolName}
+default-router ${dhcpInter.defaultRouter}
+network ${dhcpInter.network}
+${dhcpInter.dnsServer ? `dns-server ${dhcpInter.dnsServer}` : ""}`;
+
+		dhcpInter.excluded.forEach((ex) => {
+			texto += `
+ip dhcp excluded-address ${ex}`;
+		});
+
+		texto += "\nexit\n";
+
+		script += texto;
 	}
 
 	return script;

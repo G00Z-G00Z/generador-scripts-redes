@@ -16,6 +16,7 @@ export enum RouterItemConfigurable {
 	createNewInterface,
 	deleteDhcp,
 	updateDhcp,
+	setRip,
 }
 
 export type RouterActions =
@@ -27,6 +28,12 @@ export type RouterActions =
 			type: RouterItemConfigurable.deleteDhcp;
 			payload: {
 				id: string;
+			};
+	  }
+	| {
+			type: RouterItemConfigurable.setRip;
+			payload: {
+				value: boolean;
 			};
 	  }
 	| {
@@ -84,6 +91,10 @@ export const RouterReducer = (
 		case RouterItemConfigurable.banner:
 			newState = { ...router };
 			newState.security.bannerMord = action.payload;
+			return newState;
+		case RouterItemConfigurable.setRip:
+			newState = { ...router };
+			newState.hasRip = action.payload.value;
 			return newState;
 		case RouterItemConfigurable.vty:
 			newState = { ...router };
