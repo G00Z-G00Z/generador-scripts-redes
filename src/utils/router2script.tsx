@@ -1,6 +1,7 @@
 import { Router } from "../types/redes-types";
 import { ipAddress2network } from "./ipAddress2network";
 import { number2subtnetMask } from "./numberToSubnetMask";
+import { ipAddress2diffusion } from "./ipAddress2diffusion";
 
 const lineConsole = `enable secret cisco
 line console 0
@@ -35,17 +36,16 @@ ${security.encription ? encription : ""}
 	for (const key in router.interfaces) {
 		const inter = router.interfaces[key];
 
-		const { description, ipAddress, ipMask, interfaceCableType } = inter;
+		const { description, ipAddress, ipMask, interfaceCableType, dhcp } = inter;
 
-		hasRip && ipNetworks.push(ipAddress);
-
-		let bitcount: number = 10;
-
-		try {
-			bitcount = Number(ipMask);
-		} catch (error) {}
+		const { dnsServer, excluded, poolName } = dhcp;
 
 		const { port, type } = interfaceCableType;
+		const network = ipAddress2network(ipAddress),
+			diffussion = ipAddress2diffusion(ipAddress),
+			mascaraReal = number2subtnetMask(Number(ipMask));
+
+		hasRip && ipNetworks.push(network);
 
 		let isFemale =
 			inter.interfaceCableType.type === "serial"
@@ -55,12 +55,33 @@ ${security.encription ? encription : ""}
 		const textoInterface = `interface ${type} ${port}
 ${isFemale ? "clock rate 64000" : ""}
 description ${description}
-ip address ${ipAddress} ${number2subtnetMask(bitcount)}
+ip address ${ipAddress} ${mascaraReal}
 no shutdown
 exit
 `;
 
 		script += textoInterface;
+
+		if (interfaceCableType.type === "serial") continue;
+		script += `ip dhcp pool ${poolName}
+default-router ${ipAddress}
+network ${network} ${mascaraReal}
+${dnsServer !== "" ? `dns-server ${dnsServer}` : ""}
+ip dhcp excluded-address ${ipAddress}
+ip dhcp excluded-address ${diffussion}
+${
+	diffussion === dnsServer || dnsServer === ""
+		? ""
+		: `ip dhcp excluded-address ${dnsServer}`
+}
+`;
+
+		for (const ip of excluded) {
+			if (ip === "") continue;
+			script += `ip dhcp excluded-address ${ip}\n`;
+		}
+
+		script += "exit\n";
 	}
 
 	// Rip
