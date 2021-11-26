@@ -16,8 +16,9 @@ export interface IpAddressInfo {
 // DHCP configuration
 export interface DHCPConfiguration {
     excluded: IpAddressForm[]
-    network: IpAddressWithMask
-    defaultRouter: IpAddressForm,
+    // Se pueden inferir de la interface
+    // network: IpAddressWithMask
+    // defaultRouter: IpAddressForm,
     dnsServer: IpAddressForm
     poolName: string
 }
@@ -42,9 +43,9 @@ export type RouterInterface = {
     description: string,
     ipAddress: string,
     ipMask: string,
-    dhcp: {
-        [key: string]: DHCPConfiguration
-    },
+    dhcp:
+    DHCPConfiguration
+    ,
 }
 
 // Router

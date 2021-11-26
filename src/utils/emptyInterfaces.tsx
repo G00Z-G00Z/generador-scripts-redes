@@ -15,6 +15,11 @@ export const emptyRouterConfiguration: Router = {
 	},
 	hasRip: false,
 };
+export const emptyDhcpConfiguration: DHCPConfiguration = {
+	dnsServer: "",
+	excluded: [],
+	poolName: "",
+};
 
 export const emptyRouterInterface: RouterInterface = {
 	description: "",
@@ -24,13 +29,5 @@ export const emptyRouterInterface: RouterInterface = {
 	},
 	ipAddress: "",
 	ipMask: "",
-	dhcp: {},
-};
-
-export const emptyDhcpConfiguration: DHCPConfiguration = {
-	defaultRouter: "",
-	dnsServer: "",
-	excluded: [],
-	network: "",
-	poolName: "",
+	dhcp: { ...emptyDhcpConfiguration },
 };

@@ -29,7 +29,7 @@ banner motd #${security.bannerMord}#
 ${security.encription ? encription : ""}
 `;
 
-	const ipAddressForRip: string[] = [];
+	const ipNetworks: string[] = [];
 
 	// Interfaces
 	for (const key in router.interfaces) {
@@ -37,7 +37,7 @@ ${security.encription ? encription : ""}
 
 		const { description, ipAddress, ipMask, interfaceCableType } = inter;
 
-		hasRip && ipAddressForRip.push(ipAddress);
+		hasRip && ipNetworks.push(ipAddress);
 
 		let bitcount: number = 10;
 
@@ -63,32 +63,12 @@ exit
 		script += textoInterface;
 	}
 
-	// DHCP
-	// 	for (const key in router.dhcp) {
-	// 		const dhcpInter = router.dhcp[key];
-
-	// 		let texto = `ip dhcp pool ${dhcpInter.poolName}
-	// default-router ${dhcpInter.defaultRouter}
-	// network ${dhcpInter.network}
-	// ${dhcpInter.dnsServer ? `dns-server ${dhcpInter.dnsServer}` : ""}`;
-
-	// 		dhcpInter.excluded.forEach((ex) => {
-	// 			texto += `
-	// ip dhcp excluded-address ${ex}`;
-	// 		});
-
-	// 		texto += "\nexit\n";
-
-	// 		script += texto;
-	// 	}
-
 	// Rip
 
 	if (hasRip) {
 		script += "router rip\nversion 2\n";
 
-		ipAddressForRip.forEach((ip) => {
-			const network = ipAddress2network(ip);
+		ipNetworks.forEach((network) => {
 			script += `network ${network}\n`;
 		});
 	}

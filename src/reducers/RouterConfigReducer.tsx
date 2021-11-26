@@ -14,8 +14,6 @@ export enum RouterItemConfigurable {
 	eraseInterface,
 	update,
 	createNewInterface,
-	deleteDhcp,
-	updateDhcp,
 	setRip,
 }
 
@@ -25,24 +23,9 @@ export type RouterActions =
 			payload: string;
 	  }
 	| {
-			type: RouterItemConfigurable.deleteDhcp;
-			payload: {
-				interface_id: string;
-				dhcp_id: string;
-			};
-	  }
-	| {
 			type: RouterItemConfigurable.setRip;
 			payload: {
 				value: boolean;
-			};
-	  }
-	| {
-			type: RouterItemConfigurable.updateDhcp;
-			payload: {
-				interface_id: string;
-				dhcp_id: string;
-				dhcp_inter: DHCPConfiguration;
 			};
 	  }
 	| {
@@ -130,28 +113,6 @@ export const RouterReducer = (
 			const { key } = action.payload;
 
 			newState.interfaces[key] = { ...emptyRouterInterface };
-
-			return newState;
-		}
-		case RouterItemConfigurable.updateDhcp: {
-			const { dhcp_id, interface_id, dhcp_inter } = action.payload;
-
-			newState = { ...router };
-			console.log("Estoy añadiendo una");
-
-			if (!newState.interfaces?.[interface_id]) return router;
-
-			newState.interfaces[interface_id].dhcp[dhcp_id] = dhcp_inter;
-
-			return newState;
-		}
-
-		case RouterItemConfigurable.deleteDhcp: {
-			const { dhcp_id, interface_id } = action.payload;
-
-			newState = { ...router };
-
-			delete newState.interfaces[interface_id].dhcp[dhcp_id];
 
 			return newState;
 		}
