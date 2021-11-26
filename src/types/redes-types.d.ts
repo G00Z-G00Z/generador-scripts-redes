@@ -42,9 +42,6 @@ export type RouterInterface = {
     description: string,
     ipAddress: string,
     ipMask: string,
-    dhcp: {
-        [key: string]: DHCPConfiguration
-    },
 }
 
 // Router
@@ -59,6 +56,9 @@ export interface Router {
     interfaces: {
         [key: string]: RouterInterface
     }
+    dhcp: {
+        [key: string]: DHCPConfiguration
+    },
 
 }
 

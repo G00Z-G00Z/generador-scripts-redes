@@ -20,8 +20,7 @@ export const Interface: FC<{ id: string; routerInter: RouterInterface }> = ({
 	id,
 	routerInter,
 }) => {
-	const { description, interfaceCableType, ipMask, ipAddress, dhcp } =
-		routerInter;
+	const { description, interfaceCableType, ipMask, ipAddress } = routerInter;
 
 	const { dispatch } = useContext(RouterConfigContext);
 
@@ -139,45 +138,6 @@ export const Interface: FC<{ id: string; routerInter: RouterInterface }> = ({
 						onChange(e.target.value, "ipMas");
 					}}
 				/>
-			</div>
-			<div className="dhcp-config-container mt-4">
-				{Object.keys(dhcp).map((key) => {
-					const config = dhcp[key];
-					return (
-						<div key={key}>
-							<DhcpConfig id_dhcp={key} id_interface={id} dhcpInter={config} />
-							<button
-								className="btn btn-danger col-4 offset-8 mt-2"
-								onClick={() => {
-									dispatch({
-										type: RouterItemConfigurable.deleteDhcp,
-										payload: {
-											dhcp_id: key,
-											interface_id: id,
-										},
-									});
-								}}
-							>
-								Delete dhcp
-							</button>
-						</div>
-					);
-				})}
-				<button
-					className="btn btn-success"
-					onClick={() => {
-						dispatch({
-							type: RouterItemConfigurable.updateDhcp,
-							payload: {
-								dhcp_id: keyGenerator?.next()?.value ?? "1",
-								interface_id: id,
-								dhcp_inter: { ...emptyDhcpConfiguration },
-							},
-						});
-					}}
-				>
-					Add new dhcp
-				</button>
 			</div>
 		</div>
 	);

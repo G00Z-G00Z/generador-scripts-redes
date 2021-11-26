@@ -6,12 +6,11 @@ import { RouterConfigContext } from "../context/ReactConfigContext";
 import { RouterItemConfigurable } from "../reducers/RouterConfigReducer";
 
 interface Props {
-	id_interface: string;
 	dhcpInter: DHCPConfiguration;
-	id_dhcp: string;
+	id: string;
 }
 
-export const DhcpConfig: FC<Props> = ({ id_interface, id_dhcp, dhcpInter }) => {
+export const DhcpConfig: FC<Props> = ({ id, dhcpInter }) => {
 	const { dispatch } = useContext(RouterConfigContext);
 
 	const {
@@ -38,8 +37,7 @@ export const DhcpConfig: FC<Props> = ({ id_interface, id_dhcp, dhcpInter }) => {
 		dispatch({
 			type: RouterItemConfigurable.updateDhcp,
 			payload: {
-				dhcp_id: id_dhcp,
-				interface_id: id_interface,
+				id: id,
 				dhcp_inter: {
 					network,
 					defaultRouter,
@@ -49,16 +47,7 @@ export const DhcpConfig: FC<Props> = ({ id_interface, id_dhcp, dhcpInter }) => {
 				},
 			},
 		});
-	}, [
-		defaultRouter,
-		dispatch,
-		dnsServer,
-		excluded,
-		network,
-		poolName,
-		id_dhcp,
-		id_interface,
-	]);
+	}, [defaultRouter, dispatch, dnsServer, excluded, network, poolName, id]);
 
 	return (
 		<>

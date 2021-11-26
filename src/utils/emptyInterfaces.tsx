@@ -13,6 +13,7 @@ export const emptyRouterConfiguration: Router = {
 		lineConsole: false,
 		vty: false,
 	},
+	dhcp: {},
 };
 
 export const emptyRouterInterface: RouterInterface = {
@@ -23,7 +24,6 @@ export const emptyRouterInterface: RouterInterface = {
 	},
 	ipAddress: "",
 	ipMask: "",
-	dhcp: {},
 };
 
 export const emptyDhcpConfiguration: DHCPConfiguration = {

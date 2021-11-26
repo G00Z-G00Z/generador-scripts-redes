@@ -1,5 +1,6 @@
 import { BasicRouterConfig } from "./BasicRouterConfig";
 import { InterfaceConfig } from "./InterfaceConfig";
+import { DhcpConfigurationScreen } from "./DhcpConfigurationScreen";
 
 export const RouterConfiguration = () => {
 	return (
@@ -10,6 +11,9 @@ export const RouterConfiguration = () => {
 				</div>
 				<div className="row">
 					<InterfaceConfig />
+				</div>
+				<div className="row">
+					<DhcpConfigurationScreen />
 				</div>
 			</div>
 		</>
