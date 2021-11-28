@@ -80,8 +80,6 @@ ${
 			if (ip === "") continue;
 			script += `ip dhcp excluded-address ${ip}\n`;
 		}
-
-		script += "exit\n";
 	}
 
 	// Rip
